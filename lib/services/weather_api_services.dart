@@ -52,8 +52,8 @@ class WeatherApiServices {
         host: kApiHost,
         path: '/data/2.5/weather',
         queryParameters: {
-          'lat': directGeocoding.lat,
-          'lon': directGeocoding.lon,
+          'lat': directGeocoding.lat.toString(),
+          'lon': directGeocoding.lon.toString(),
           'units': kUnit,
           'appid': dotenv.env['APPID']
         });
