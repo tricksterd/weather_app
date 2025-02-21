@@ -15,7 +15,6 @@ class WeatherRepository {
     try {
       final DirectGeocoding directGeocoding =
           await weatherApiServices.getDirectGeocoding(city);
-      print(directGeocoding);
 
       final Weather tempWeather =
           await weatherApiServices.getWeather(directGeocoding);
