@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-// import 'package:weather_app/cubits/temp_settings/temp_settings_cubit.dart';
-import 'package:weather_app/pages/settings_page.dart';
-
-import '../constants/constants.dart';
-// import '../cubits/weather/weather_cubit.dart';
-import '../widgets/error_dialog.dart';
-import 'search_page.dart';
 
 import '../blocs/blocs.dart';
+import '../constants/constants.dart';
+import '../widgets/error_dialog.dart';
+import 'search_page.dart';
+import 'settings_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
