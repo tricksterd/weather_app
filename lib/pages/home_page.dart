@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
+import 'package:weather_app/cubits/temp_settings/temp_settings_cubit.dart';
+import 'package:weather_app/pages/settings_page.dart';
 
 import '../constants/constants.dart';
 import '../cubits/weather/weather_cubit.dart';
@@ -37,6 +39,18 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(
               Icons.search,
             ),
+          ),
+          IconButton(
+            onPressed: () async {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const SettingsPage(),
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.settings,
+            ),
           )
         ],
       ),
@@ -45,6 +59,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   String showTemperature(double temperature) {
+    final tempUnit = context.watch<TempSettingsCubit>().state.tempSettings;
+    if (tempUnit == TempSettings.fahrenheit) {
+      return '${((temperature * 9 / 5) + 32).toStringAsFixed(2)}°F';
+    }
     return '${temperature.toStringAsFixed(2)} ℃';
   }
 
@@ -80,10 +98,12 @@ class _HomePageState extends State<HomePage> {
       },
       builder: (context, state) {
         if (state.status == WeatherStatus.initial) {
-          return const Text(
-            'Select a city',
-            style: TextStyle(
-              fontSize: 20.0,
+          return const Center(
+            child: Text(
+              'Select a city',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
             ),
           );
         }
@@ -94,10 +114,12 @@ class _HomePageState extends State<HomePage> {
         }
 
         if (state.status == WeatherStatus.error && state.weather.name == '') {
-          return const Text(
-            'Select a city',
-            style: TextStyle(
-              fontSize: 20.0,
+          return const Center(
+            child: Text(
+              'Select a city',
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
             ),
           );
         }
