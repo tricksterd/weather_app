@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/cubits/temp_settings/temp_settings_cubit.dart';
+import 'package:weather_app/cubits/theme/theme_cubit.dart';
 
 import 'cubits/weather/weather_cubit.dart';
 import 'pages/home_page.dart';
@@ -31,15 +32,26 @@ class MainApp extends StatelessWidget {
               weatherRepository: context.read<WeatherRepository>(),
             ),
           ),
-          BlocProvider(
+          BlocProvider<TempSettingsCubit>(
             create: (context) => TempSettingsCubit(),
           ),
+          BlocProvider<ThemeCubit>(
+            create: (context) => ThemeCubit(
+              weatherCubit: context.read<WeatherCubit>(),
+            ),
+          ),
         ],
-        child: MaterialApp(
-            title: 'Weather App',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(primarySwatch: Colors.blue),
-            home: const HomePage()),
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp(
+                title: 'Weather App',
+                debugShowCheckedModeBanner: false,
+                theme: state.appTheme == AppTheme.light
+                    ? ThemeData.light()
+                    : ThemeData.dark(),
+                home: const HomePage());
+          },
+        ),
       ),
     );
   }
